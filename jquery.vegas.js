@@ -37,6 +37,7 @@
         delay = 5000,
         walk = function() {},
         timer,
+	overflow = true,
         methods = {
 
         // Init plugin
@@ -47,6 +48,7 @@
                 valign: 'center',
                 fade: 0,
                 loading: true,
+		overflow: overflow,
                 load: function() {},
                 complete: function() {}
             }
@@ -170,7 +172,8 @@
                 delay: delay,
                 preload: false,
                 backgrounds: backgrounds,
-                walk: walk
+                walk: walk,
+                overflow: overflow
             };
             
             $.extend( options, $.vegas.defaults.slideshow, settings );
@@ -358,7 +361,8 @@
             newLeft, newTop,
             properties;
 
-        if ( rw > ri ) {
+        if ( ((rw > ri) && (settings.overflow)) ||
+			((rw < ri) && (!settings.overflow)) ) {
             newWidth = wh / ri;
             newHeight = wh;
         } else {
@@ -438,6 +442,7 @@
             // loading      bool
             // load:        function
             // complete:    function
+            // overflow:    bool
         },
         slideshow: {
             // fade:        null
@@ -446,6 +451,7 @@
             // backgrounds: array
             // preload:     bool
             // walk:        function
+            // overflow:    bool
         },
         overlay: {
             // src:         string
